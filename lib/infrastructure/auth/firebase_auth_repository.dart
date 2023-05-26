@@ -3,13 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:hello_ddd/domain/auth/auth_failure.dart';
 import 'package:hello_ddd/domain/auth/i_auth_repository.dart';
 import 'package:hello_ddd/domain/auth/value_objects.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
+import 'firebase_user_mapper.dart';
+import '../../domain/auth/user.dart';
 
 @LazySingleton(as: IAuthRepository, env: [Environment.prod])
 class FirebaseAuthRepository implements IAuthRepository {
-  final FirebaseAuth _firebaseAuth;
+  final auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
 
   FirebaseAuthRepository(this._firebaseAuth, this._googleSignIn);
@@ -58,7 +60,7 @@ class FirebaseAuthRepository implements IAuthRepository {
         return left(const AuthFailure.cancelledByUser());
       }
       final googleAuthentication = await googleUser.authentication;
-      final authCredential = GoogleAuthProvider.credential(
+      final authCredential = auth.GoogleAuthProvider.credential(
           idToken: googleAuthentication.idToken,
           accessToken: googleAuthentication.accessToken);
       await _firebaseAuth.signInWithCredential(authCredential);
@@ -67,4 +69,14 @@ class FirebaseAuthRepository implements IAuthRepository {
       return left(const AuthFailure.serverError());
     }
   }
+
+  @override
+  Future<Option<User>> getSignedInUser() async =>
+      optionOf(_firebaseAuth.currentUser?.toDomain());
+
+  @override
+  Future<void> signOut() => Future.wait([
+        _googleSignIn.signOut(),
+        _firebaseAuth.signOut(),
+      ]);
 }

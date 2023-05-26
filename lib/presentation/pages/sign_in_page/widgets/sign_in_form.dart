@@ -19,7 +19,7 @@ class SignInForm extends StatelessWidget {
           child: ListView(
             children: [
               const Text(
-                '🤢',
+                '👀',
                 style: TextStyle(fontSize: 130),
                 textAlign: TextAlign.center,
               ),

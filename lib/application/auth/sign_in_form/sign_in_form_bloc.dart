@@ -38,7 +38,7 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
           _performActionOnAuthRepositoryWithCredentials(
               _repository.registerWithCredentials, emit, e);
         },
-        signInWithCredentialsPressed: (e) async* {
+        signInWithCredentialsPressed: (e) async {
           _performActionOnAuthRepositoryWithCredentials(
               _repository.signInWithCredentials, emit, e);
         },
