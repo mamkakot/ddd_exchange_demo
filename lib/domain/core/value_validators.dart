@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:dartz/dartz.dart';
 import '../core/failures.dart';
 
@@ -8,7 +6,8 @@ Either<ValueFailure<String>, String> validateMaxLength(
   if (input.length <= maxLength) {
     return right(input);
   } else {
-    return left(ValueFailure.longName(failedValue: input, max: maxLength));
+    return left(
+        ValueFailure.valueTooLong(failedValue: input, maxLength: maxLength));
   }
 }
 
@@ -31,6 +30,24 @@ Either<ValueFailure<int>, int> validateTimeSpan(
   }
 }
 
+Either<ValueFailure<double>, double> validateMaxHours(
+    double input, double maxHours) {
+  if (input <= maxHours) {
+    return right(input);
+  } else {
+    return left(ValueFailure.tooMuchHours(failedValue: input, max: maxHours));
+  }
+}
+
+Either<ValueFailure<double>, double> validateMinHours(
+    double input, double minHours) {
+  if (input > minHours) {
+    return right(input);
+  } else {
+    return left(ValueFailure.tooLittleHours(failedValue: input, min: minHours));
+  }
+}
+
 Either<ValueFailure<String>, String> validateEmailAddress(String input) {
   const emailRegex =
       r"""^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+""";
@@ -46,5 +63,17 @@ Either<ValueFailure<String>, String> validatePassword(String input) {
     return right(input);
   } else {
     return left(ValueFailure.shortPassword(failedValue: input));
+  }
+}
+
+Either<ValueFailure<String>, String> validateUserCode(String input, int length) {
+  const codeRegex = r"""^[0-9]+$""";
+  if (RegExp(codeRegex).hasMatch(input) && input.length == length) {
+    return right(input);
+  } else {
+    return left(ValueFailure.invalidWorkerCodeLength(
+      failedValue: input,
+      exactLength: length,
+    ));
   }
 }

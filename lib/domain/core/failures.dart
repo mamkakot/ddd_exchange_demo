@@ -4,29 +4,39 @@ part 'failures.freezed.dart';
 
 @freezed
 class ValueFailure<T> with _$ValueFailure<T> {
-  // when task time span is too short
   const factory ValueFailure.shortTimeSpan({
     required T failedValue,
     required int min,
   }) = ShortTimeSpan<T>;
 
-  // when task name is too long
-  const factory ValueFailure.longName({
+  const factory ValueFailure.valueTooLong({
     required T failedValue,
-    required int max,
-  }) = LongName<T>;
+    required int maxLength,
+  }) = ValueTooLong<T>;
 
-  // when task name is empty
+  const factory ValueFailure.tooMuchHours({
+    required T failedValue,
+    required double max,
+  }) = TooMuchHours<T>;
+
+  const factory ValueFailure.tooLittleHours({
+    required T failedValue,
+    required double min,
+  }) = TooLittleHours<T>;
+
   const factory ValueFailure.empty({
     required T failedValue,
   }) = Empty<T>;
 
-  // when email is invalid
+  const factory ValueFailure.invalidWorkerCodeLength({
+    required T failedValue,
+    required int exactLength,
+  }) = InvalidWorkerCodeLength<T>;
+
   const factory ValueFailure.invalidEmail({
     required T failedValue,
   }) = InvalidEmail<T>;
 
-  // when password is too short
   const factory ValueFailure.shortPassword({
     required T failedValue,
   }) = ShortPassword<T>;
