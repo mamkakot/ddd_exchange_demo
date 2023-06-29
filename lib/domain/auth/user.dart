@@ -9,5 +9,3 @@ class User with _$User {
     required UniqueId id,
   }) = _User;
 }
-
-
