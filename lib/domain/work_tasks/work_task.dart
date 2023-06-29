@@ -20,6 +20,7 @@ class WorkTask with _$WorkTask {
     required WorkTaskHours hours,
     required WorkTaskBegin beginHour,
     required WorkTaskEnd endHour,
+    required bool completed,
     // required Worker author,
     // required Worker executor,
     required WorkTaskDescription description,
@@ -34,6 +35,7 @@ class WorkTask with _$WorkTask {
         beginHour: WorkTaskBegin(DateTime.now()),
         endHour: WorkTaskEnd(DateTime.now().add(const Duration(hours: 1))),
         description: WorkTaskDescription(''),
+        completed: false,
       );
 }
 

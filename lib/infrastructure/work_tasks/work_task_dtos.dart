@@ -23,6 +23,7 @@ abstract class WorkTaskDTO implements _$WorkTaskDTO {
     required DateTime startDate,
     required DateTime endDate,
     required StoreDTO store,
+    required bool completed,
     @ServerTimestampConverter() required FieldValue serverTimeStamp,
   }) = _WorkTaskDTO;
 
@@ -37,10 +38,11 @@ abstract class WorkTaskDTO implements _$WorkTaskDTO {
       store: StoreDTO.fromDomain(workTask.store),
       endDate: workTask.endHour.getOrCrash(),
       serverTimeStamp: FieldValue.serverTimestamp(),
+      completed: workTask.completed,
     );
   }
 
-  WorkTask fromDomain() {
+  WorkTask toDomain() {
     return WorkTask(
       id: UniqueId.fromUniqueString(id),
       name: WorkTaskName(name),
@@ -50,11 +52,16 @@ abstract class WorkTaskDTO implements _$WorkTaskDTO {
       beginHour: WorkTaskBegin(startDate),
       endHour: WorkTaskEnd(endDate),
       description: WorkTaskDescription(description),
+      completed: completed,
     );
   }
 
   factory WorkTaskDTO.fromJson(Map<String, dynamic> json) =>
       _$WorkTaskDTOFromJson(json);
+
+  factory WorkTaskDTO.fromFirestore(DocumentSnapshot doc) =>
+      WorkTaskDTO.fromJson(doc.data() as Map<String, dynamic>)
+          .copyWith(id: doc.id);
 }
 
 class ServerTimestampConverter implements JsonConverter<FieldValue, Object> {
