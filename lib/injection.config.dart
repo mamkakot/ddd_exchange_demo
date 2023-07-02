@@ -14,14 +14,16 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:google_sign_in/google_sign_in.dart' as _i4;
 import 'package:injectable/injectable.dart' as _i2;
 
-import 'application/auth/auth_bloc.dart' as _i11;
-import 'application/auth/sign_in_form/sign_in_form_bloc.dart' as _i7;
+import 'application/auth/auth_bloc.dart' as _i12;
+import 'application/auth/sign_in_form/sign_in_form_bloc.dart' as _i9;
+import 'application/work_tasks/work_task_actor/work_task_actor_bloc.dart'
+    as _i10;
 import 'application/work_tasks/work_task_watcher/work_task_watcher_bloc.dart'
-    as _i9;
+    as _i11;
 import 'domain/auth/i_auth_repository.dart' as _i5;
-import 'domain/work_tasks/i_work_task_repository.dart' as _i10;
+import 'domain/work_tasks/i_work_task_repository.dart' as _i7;
 import 'infrastructure/auth/firebase_auth_repository.dart' as _i6;
-import 'infrastructure/core/firebase_injectable_module.dart' as _i12;
+import 'infrastructure/core/firebase_injectable_module.dart' as _i13;
 import 'infrastructure/work_tasks/work_task_repository.dart' as _i8;
 
 const String _prod = 'prod';
@@ -49,14 +51,19 @@ extension GetItInjectableX on _i1.GetIt {
       ),
       registerFor: {_prod},
     );
-    gh.factory<_i7.SignInFormBloc>(
-        () => _i7.SignInFormBloc(gh<_i5.IAuthRepository>()));
-    gh.lazySingleton<_i8.WorkTaskRepository>(() => _i8.WorkTaskRepository());
-    gh.factory<_i9.WorkTaskWatcherBloc>(
-        () => _i9.WorkTaskWatcherBloc(gh<_i10.IWorkTaskRepository>()));
-    gh.factory<_i11.AuthBloc>(() => _i11.AuthBloc(gh<_i5.IAuthRepository>()));
+    gh.lazySingleton<_i7.IWorkTaskRepository>(
+      () => _i8.WorkTaskRepository(),
+      registerFor: {_prod},
+    );
+    gh.factory<_i9.SignInFormBloc>(
+        () => _i9.SignInFormBloc(gh<_i5.IAuthRepository>()));
+    gh.factory<_i10.WorkTaskActorBloc>(
+        () => _i10.WorkTaskActorBloc(gh<_i7.IWorkTaskRepository>()));
+    gh.factory<_i11.WorkTaskWatcherBloc>(
+        () => _i11.WorkTaskWatcherBloc(gh<_i7.IWorkTaskRepository>()));
+    gh.factory<_i12.AuthBloc>(() => _i12.AuthBloc(gh<_i5.IAuthRepository>()));
     return this;
   }
 }
 
-class _$FirebaseInjectableModule extends _i12.FirebaseInjectableModule {}
+class _$FirebaseInjectableModule extends _i13.FirebaseInjectableModule {}

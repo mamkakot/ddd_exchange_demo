@@ -4,7 +4,7 @@ part of 'work_task_actor_bloc.dart';
 class WorkTaskActorState with _$WorkTaskActorState {
   const factory WorkTaskActorState.initial() = _Initial;
   const factory WorkTaskActorState.actionInProgress() = _ActionInProgress;
-  const factory WorkTaskActorState.deleteFailure(WorkTaskFailure noteFailure) =
+  const factory WorkTaskActorState.deleteFailure(WorkTaskFailure workTaskFailure) =
   _DeleteFailure;
   const factory WorkTaskActorState.deleteSuccess() = _DeleteSuccess;
 }

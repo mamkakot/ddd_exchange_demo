@@ -14,8 +14,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final IAuthRepository _authRepository;
 
   AuthBloc(this._authRepository) : super(const AuthState.initial()) {
-    on<AuthEvent>((event, emit) {
-      event.map(
+    on<AuthEvent>((event, emit) async {
+      await event.map(
         authCheckRequested: (e) async {
           final userOption = await _authRepository.getSignedInUser();
           userOption.fold(

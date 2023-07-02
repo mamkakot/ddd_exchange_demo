@@ -1,75 +1,79 @@
-// **************************************************************************
-// AutoRouteGenerator
-// **************************************************************************
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// AutoRouteGenerator
+// AutoRouterGenerator
 // **************************************************************************
-//
+
 // ignore_for_file: type=lint
+// coverage:ignore-file
 
-// ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i3;
-import 'package:flutter/material.dart' as _i4;
+part of 'router.dart';
 
-import '../pages/sign_in_page/sign_in_page.dart' as _i1;
-import '../pages/splash/splash_page.dart' as _i2;
-
-class AppRouter extends _i3.RootStackRouter {
-  AppRouter([_i4.GlobalKey<_i4.NavigatorState>? navigatorKey])
-      : super(navigatorKey);
+abstract class _$AppRouter extends RootStackRouter {
+  // ignore: unused_element
+  _$AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i3.PageFactory> pagesMap = {
+  final Map<String, PageFactory> pagesMap = {
     SignInRoute.name: (routeData) {
-      return _i3.MaterialPageX<dynamic>(
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i1.SignInPage(),
+        child: const SignInPage(),
       );
     },
     SplashRoute.name: (routeData) {
-      return _i3.MaterialPageX<dynamic>(
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i2.SplashPage(),
+        child: const SplashPage(),
+      );
+    },
+    WorkTasksOverviewRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const WorkTasksOverviewPage(),
       );
     },
   };
-
-  @override
-  List<_i3.RouteConfig> get routes => [
-        _i3.RouteConfig(
-          SignInRoute.name,
-          path: '/sign_in_page',
-        ),
-        _i3.RouteConfig(
-          SplashRoute.name,
-          path: '/',
-        ),
-      ];
 }
 
 /// generated route for
-/// [_i1.SignInPage]
-class SignInRoute extends _i3.PageRouteInfo<void> {
-  const SignInRoute()
+/// [SignInPage]
+class SignInRoute extends PageRouteInfo<void> {
+  const SignInRoute({List<PageRouteInfo>? children})
       : super(
           SignInRoute.name,
-          path: '/sign_in_page',
+          initialChildren: children,
         );
 
   static const String name = 'SignInRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i2.SplashPage]
-class SplashRoute extends _i3.PageRouteInfo<void> {
-  const SplashRoute()
+/// [SplashPage]
+class SplashRoute extends PageRouteInfo<void> {
+  const SplashRoute({List<PageRouteInfo>? children})
       : super(
           SplashRoute.name,
-          path: '/',
+          initialChildren: children,
         );
 
   static const String name = 'SplashRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [WorkTasksOverviewPage]
+class WorkTasksOverviewRoute extends PageRouteInfo<void> {
+  const WorkTasksOverviewRoute({List<PageRouteInfo>? children})
+      : super(
+          WorkTasksOverviewRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WorkTasksOverviewRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }

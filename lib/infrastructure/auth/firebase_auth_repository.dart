@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hello_ddd/domain/auth/auth_failure.dart';
 import 'package:hello_ddd/domain/auth/i_auth_repository.dart';
 import 'package:hello_ddd/domain/auth/value_objects.dart';
@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'firebase_user_mapper.dart';
-import '../../domain/auth/user.dart';
+import '../../domain/auth/user.dart' as cool_user;
 
 @LazySingleton(as: IAuthRepository, env: [Environment.prod])
 class FirebaseAuthRepository implements IAuthRepository {
@@ -25,7 +25,8 @@ class FirebaseAuthRepository implements IAuthRepository {
       await _firebaseAuth.createUserWithEmailAndPassword(
           email: emailString, password: passwordString);
       return right(unit);
-    } on PlatformException catch (e) {
+    } on FirebaseAuthException catch (e) {
+      print('Failed with error code: ${e.code}');
       if (e.code == 'email-already-in-use') {
         return left(const AuthFailure.emailAlreadyInUse());
       } else {
@@ -43,8 +44,9 @@ class FirebaseAuthRepository implements IAuthRepository {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: emailString, password: passwordString);
       return right(unit);
-    } on PlatformException catch (e) {
+    } on FirebaseAuthException catch (e) {
       if (e.code == 'wrong-password' || e.code == 'user-not-found') {
+        print('Failed with error code: ${e.code}');
         return left(const AuthFailure.invalidCredentials());
       } else {
         return left(const AuthFailure.serverError());
@@ -65,13 +67,13 @@ class FirebaseAuthRepository implements IAuthRepository {
           accessToken: googleAuthentication.accessToken);
       await _firebaseAuth.signInWithCredential(authCredential);
       return right(unit);
-    } on PlatformException catch (_) {
+    } on FirebaseAuthException catch (_) {
       return left(const AuthFailure.serverError());
     }
   }
 
   @override
-  Future<Option<User>> getSignedInUser() async =>
+  Future<Option<cool_user.User>> getSignedInUser() async =>
       optionOf(_firebaseAuth.currentUser?.toDomain());
 
   @override

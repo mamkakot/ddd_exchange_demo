@@ -7,7 +7,6 @@ import 'package:hello_ddd/domain/auth/auth_failure.dart';
 import 'package:hello_ddd/domain/auth/i_auth_repository.dart';
 import 'package:hello_ddd/domain/auth/value_objects.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
 
 part 'sign_in_form_event.dart';
 
@@ -20,29 +19,29 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
   final IAuthRepository _repository;
 
   SignInFormBloc(this._repository) : super(SignInFormState.initial()) {
-    on<SignInFormEvent>((event, emit) {
-      event.map(
-        emailChanged: (e) async {
+    on<SignInFormEvent>((event, emit) async {
+      await event.map(
+        emailChanged: (e) {
           emit(state.copyWith(
             emailAddress: EmailAddress(e.emailString),
             authFailureOrSuccessOption: none(),
           ));
         },
-        passwordChanged: (e) async {
+        passwordChanged: (e) {
           emit(state.copyWith(
             password: Password(e.passwordString),
             authFailureOrSuccessOption: none(),
           ));
         },
         registerWithCredentialsPressed: (e) async {
-          _performActionOnAuthRepositoryWithCredentials(
+          await _performActionOnAuthRepositoryWithCredentials(
               _repository.registerWithCredentials, emit, e);
         },
         signInWithCredentialsPressed: (e) async {
-          _performActionOnAuthRepositoryWithCredentials(
+          await _performActionOnAuthRepositoryWithCredentials(
               _repository.signInWithCredentials, emit, e);
         },
-        signInWithGooglePressed: (e) async* {
+        signInWithGooglePressed: (e) async {
           emit(state.copyWith(
             isSubmitting: true,
             authFailureOrSuccessOption: none(),
@@ -59,10 +58,9 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
 
   Future<void> _performActionOnAuthRepositoryWithCredentials(
       Future<Either<AuthFailure, Unit>> Function({
-    required EmailAddress emailAddress,
-    required Password password,
-  })
-          forwardedCall,
+        required EmailAddress emailAddress,
+        required Password password,
+      }) forwardedCall,
       Emitter<SignInFormState> emit,
       SignInFormEvent event) async {
     final isEmailValid = state.emailAddress.isValid();
@@ -77,7 +75,8 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
       ));
 
       result = await forwardedCall(
-          emailAddress: state.emailAddress, password: state.password);
+              emailAddress: state.emailAddress, password: state.password)
+          .whenComplete(() => null);
     }
 
     emit(state.copyWith(

@@ -40,7 +40,7 @@ dependencies:
   uuid: ^3.0.6
 
   # Routing
-  auto_route: ^5.0.4
+  auto_route: ^7.5.0
   url_launcher: ^6.1.10
 
   # Bloc
@@ -76,7 +76,7 @@ dev_dependencies:
   injectable_generator: ^2.1.3
   json_serializable: ^6.6.1
   flutter_lints: ^2.0.0
-  auto_route_generator: ^5.0.3
+  auto_route_generator: ^7.1.1
 
 flutter:
   uses-material-design: true

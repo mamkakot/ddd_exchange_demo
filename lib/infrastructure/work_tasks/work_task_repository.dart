@@ -8,7 +8,7 @@ import 'package:hello_ddd/infrastructure/work_tasks/work_task_dtos.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
-@LazySingleton()
+@LazySingleton(as: IWorkTaskRepository, env: [Environment.prod])
 class WorkTaskRepository implements IWorkTaskRepository {
   late final FirebaseFirestore _firestore;
 
