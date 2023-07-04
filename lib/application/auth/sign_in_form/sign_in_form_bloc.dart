@@ -1,4 +1,4 @@
-import 'dart:async';
+ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
@@ -21,13 +21,13 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
   SignInFormBloc(this._repository) : super(SignInFormState.initial()) {
     on<SignInFormEvent>((event, emit) async {
       await event.map(
-        emailChanged: (e) {
+        emailChanged: (e) async {
           emit(state.copyWith(
             emailAddress: EmailAddress(e.emailString),
             authFailureOrSuccessOption: none(),
           ));
         },
-        passwordChanged: (e) {
+        passwordChanged: (e) async {
           emit(state.copyWith(
             password: Password(e.passwordString),
             authFailureOrSuccessOption: none(),

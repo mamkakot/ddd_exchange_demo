@@ -6,6 +6,7 @@ import 'package:hello_ddd/application/work_tasks/work_task_actor/work_task_actor
 import 'package:hello_ddd/application/work_tasks/work_task_watcher/work_task_watcher_bloc.dart';
 import 'package:hello_ddd/injection.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:hello_ddd/presentation/pages/work_tasks/widgets/uncompleted_switch.dart';
 import 'package:hello_ddd/presentation/pages/work_tasks/widgets/work_tasks_overview_body.dart';
 import 'package:hello_ddd/presentation/routes/router.dart';
 
@@ -54,17 +55,14 @@ class WorkTasksOverviewPage extends StatelessWidget {
                   context.read<AuthBloc>().add(const AuthEvent.signedOut());
                 },
               ),
-              actions: <Widget>[
-                IconButton(
-                  icon: const Icon(Icons.indeterminate_check_box),
-                  onPressed: () {},
-                )
+              actions: const <Widget>[
+                UncompletedSwitch(),
               ],
             ),
             body: WorkTasksOverviewBody(),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                // TODO: Navigate to WorkTaskFormPage
+                context.router.replace(WorkTaskFormRoute(editedWorkTask: null));
               },
               child: const Icon(Icons.add),
             ),

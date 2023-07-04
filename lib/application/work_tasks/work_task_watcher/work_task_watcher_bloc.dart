@@ -25,8 +25,8 @@ class WorkTaskWatcherBloc
 
   WorkTaskWatcherBloc(this._workTaskRepository)
       : super(const WorkTaskWatcherState.initial()) {
-    on<WorkTaskWatcherEvent>((event, emit) {
-      event.map(
+    on<WorkTaskWatcherEvent>((event, emit) async {
+      await event.map(
         watchAllStarted: (e) async {
           emit(const WorkTaskWatcherState.loadInProgress());
           await _workTaskStreamSubscription?.cancel();

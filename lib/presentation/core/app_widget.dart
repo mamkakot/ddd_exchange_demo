@@ -42,7 +42,7 @@ class AppWidget extends StatelessWidget {
             bodyMedium: TextStyle(fontSize: 14, fontFamily: 'Hind'),
             bodySmall: TextStyle(
               color: Colors.black,
-              fontSize: 12,
+              fontSize: 14,
               fontFamily: 'Montserrat',
               fontWeight: FontWeight.w400,
             ),
@@ -50,14 +50,17 @@ class AppWidget extends StatelessWidget {
                 fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
           ),
           inputDecorationTheme: InputDecorationTheme(
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  borderSide: const BorderSide(
-                    width: 1,
-                    color: Colors.black,
-                  )),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0)),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: const BorderSide(
+                  width: 1,
+                  color: Colors.black,
+                )),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
+            fillColor: const Color.fromARGB(15, 0, 161, 153),
+            filled: true,
+          ),
           // floatingActionButtonTheme: FloatingActionButtonThemeData(
           //   backgroundColor: Colors.blue[900],
           // ),

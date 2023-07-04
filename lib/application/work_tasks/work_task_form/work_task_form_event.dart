@@ -3,9 +3,9 @@ part of 'work_task_form_bloc.dart';
 @freezed
 class WorkTaskFormEvent with _$WorkTaskFormEvent {
   const factory WorkTaskFormEvent.initialized(
-      Option<WorkTask> initialNoteOption) = _Initialized;
+      Option<WorkTask> initialWorkTaskOption) = _Initialized;
 
-  const factory WorkTaskFormEvent.nameChanged(String bodyStr) = _NameChanged;
+  const factory WorkTaskFormEvent.nameChanged(String nameStr) = _NameChanged;
 
   const factory WorkTaskFormEvent.typeChanged(String type) = _TypeChanged;
 

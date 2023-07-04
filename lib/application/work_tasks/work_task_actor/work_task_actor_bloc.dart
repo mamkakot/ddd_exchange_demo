@@ -17,8 +17,8 @@ class WorkTaskActorBloc extends Bloc<WorkTaskActorEvent, WorkTaskActorState> {
 
   WorkTaskActorBloc(this._workTaskRepository)
       : super(const WorkTaskActorState.initial()) {
-    on<WorkTaskActorEvent>((event, emit) {
-      event.map(deleted: (e) async* {
+    on<WorkTaskActorEvent>((event, emit) async {
+      await event.map(deleted: (e) async {
         emit(const WorkTaskActorState.actionInProgress());
         final possibleFailure =
             await _workTaskRepository.delete(event.workTask);

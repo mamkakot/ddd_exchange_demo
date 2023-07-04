@@ -10,11 +10,11 @@ import 'firebase_user_mapper.dart';
 import '../../domain/auth/user.dart' as cool_user;
 
 @LazySingleton(as: IAuthRepository, env: [Environment.prod])
-class FirebaseAuthRepository implements IAuthRepository {
+class FirebaseAuthFacade implements IAuthRepository {
   final auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
 
-  FirebaseAuthRepository(this._firebaseAuth, this._googleSignIn);
+  FirebaseAuthFacade(this._firebaseAuth, this._googleSignIn);
 
   @override
   Future<Either<AuthFailure, Unit>> registerWithCredentials(
