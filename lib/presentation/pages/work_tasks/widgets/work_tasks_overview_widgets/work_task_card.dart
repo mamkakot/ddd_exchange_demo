@@ -49,7 +49,10 @@ class WorkTaskCard extends StatelessWidget {
                   const SizedBox(height: 8.0),
                   Text(
                     workTask.type.getOrCrash(),
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 12),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(fontSize: 12),
                   ),
                   const SizedBox(height: 8.0),
                   Text(
@@ -60,14 +63,32 @@ class WorkTaskCard extends StatelessWidget {
                         ),
                   ),
                   const SizedBox(height: 15.0),
-                  Text(
-                    'Исполнитель не назначен.',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 182, 23, 23),
-                        ),
-                  ),
+                  if (workTask.completed)
+                    Text(
+                      'Задача выполнена.',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                    )
+                  else if (workTask.worker == null)
+                    Text(
+                      'Исполнитель не назначен.',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: const Color(0xFFB61717),
+                          ),
+                    )
+                  else
+                    Text(
+                      'Исполнитель назначен.',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: const Color(0xFF258039),
+                          ),
+                    )
                 ],
               ),
             ),

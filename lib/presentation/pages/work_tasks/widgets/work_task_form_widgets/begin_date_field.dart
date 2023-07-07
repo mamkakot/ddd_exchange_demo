@@ -11,7 +11,7 @@ class BeginDateField extends HookWidget {
   @override
   Widget build(BuildContext context) {
     DateTime selectedValue =
-        DateTime.now().subtract(const Duration(minutes: 12));
+        context.read<WorkTaskFormBloc>().state.workTask.beginDate.getOrCrash();
 
     return BlocBuilder<WorkTaskFormBloc, WorkTaskFormState>(
       buildWhen: (previous, current) =>

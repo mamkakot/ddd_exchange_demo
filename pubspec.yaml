@@ -52,6 +52,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   font_awesome_flutter: ^10.4.0
   flutter_datetime_picker_bdaya: ^3.0.2
+  flutter_rating_bar: ^4.0.1
 
   # Firebase
   firebase_core: ^2.10.0

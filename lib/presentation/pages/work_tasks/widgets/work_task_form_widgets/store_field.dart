@@ -8,7 +8,7 @@ class StoreField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Store dropdownValue = Store.predefinedStores.first;
+    Store dropdownValue = context.read<WorkTaskFormBloc>().state.workTask.store;
 
     return BlocListener<WorkTaskFormBloc, WorkTaskFormState>(
       listenWhen: (previous, current) =>

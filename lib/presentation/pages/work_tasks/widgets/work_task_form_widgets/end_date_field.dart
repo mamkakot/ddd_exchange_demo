@@ -10,7 +10,8 @@ class EndDateField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime selectedValue = DateTime.now().add(const Duration(hours: 8));
+    DateTime selectedValue =
+        context.read<WorkTaskFormBloc>().state.workTask.endDate.getOrCrash();
 
     return BlocBuilder<WorkTaskFormBloc, WorkTaskFormState>(
       buildWhen: (previous, current) =>

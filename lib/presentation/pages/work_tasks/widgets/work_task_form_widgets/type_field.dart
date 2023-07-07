@@ -8,7 +8,8 @@ class TypeField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String dropdownValue = WorkTaskType.predefinedTypes.first;
+    String dropdownValue =
+        context.read<WorkTaskFormBloc>().state.workTask.type.getOrCrash();
 
     return BlocListener<WorkTaskFormBloc, WorkTaskFormState>(
       listenWhen: (previous, current) =>
@@ -21,6 +22,7 @@ class TypeField extends StatelessWidget {
         child: DropdownButtonFormField<String>(
           isExpanded: true,
           value: dropdownValue,
+
           icon: const Icon(Icons.keyboard_arrow_down_outlined),
           items: WorkTaskType.predefinedTypes
               .map<DropdownMenuItem<String>>((String value) => DropdownMenuItem(
