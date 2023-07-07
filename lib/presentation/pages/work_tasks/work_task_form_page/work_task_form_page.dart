@@ -6,10 +6,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hello_ddd/application/work_tasks/work_task_form/work_task_form_bloc.dart';
 import 'package:hello_ddd/domain/work_tasks/work_task.dart';
 import 'package:hello_ddd/injection.dart';
-import 'package:hello_ddd/presentation/pages/work_tasks/widgets/name_field.dart';
-import 'package:hello_ddd/presentation/pages/work_tasks/widgets/type_field.dart';
+import 'package:hello_ddd/presentation/pages/work_tasks/widgets/work_task_form_widgets/begin_date_field.dart';
+import 'package:hello_ddd/presentation/pages/work_tasks/widgets/work_task_form_widgets/description_field.dart';
+import 'package:hello_ddd/presentation/pages/work_tasks/widgets/work_task_form_widgets/name_field.dart';
+import 'package:hello_ddd/presentation/pages/work_tasks/widgets/work_task_form_widgets/store_field.dart';
+import 'package:hello_ddd/presentation/pages/work_tasks/widgets/work_task_form_widgets/type_field.dart';
+import 'package:hello_ddd/presentation/pages/work_tasks/widgets/work_task_form_widgets/worker_card.dart';
 
 import '../../../routes/router.dart';
+import '../widgets/work_task_form_widgets/end_date_field.dart';
 
 @RoutePage()
 class WorkTaskFormPage extends StatelessWidget {
@@ -33,9 +38,9 @@ class WorkTaskFormPage extends StatelessWidget {
               (failure) => FlushbarHelper.createError(
                   message: failure.map(
                 unexpected: (_) =>
-                    'Unexpected error occurred while deleting, please contact support.',
-                insufficientPermission: (_) => 'Insufficient permissions ❌',
-                unableToUpdate: (_) => 'Unable to update',
+                    'Произошла неожиданная ошибка, свяжитесь с поддержкой',
+                insufficientPermission: (_) => 'Недостаточно прав ❌',
+                unableToUpdate: (_) => 'Невоможно обновить',
               )).show(context),
               (_) {
                 context.router.replace(const WorkTasksOverviewRoute());
@@ -67,8 +72,8 @@ class WorkTaskFormPageScaffold extends StatelessWidget {
         title: BlocBuilder<WorkTaskFormBloc, WorkTaskFormState>(
           buildWhen: (previous, current) =>
               previous.isSaving != current.isSaving,
-          builder: (context, state) =>
-              Text(state.isEditing ? "Edit a work task" : "Create a work task"),
+          builder: (context, state) => Text(
+              state.isEditing ? "Редактирование заявки" : "Создание заявки"),
         ),
         actions: <Widget>[
           IconButton(
@@ -82,26 +87,92 @@ class WorkTaskFormPageScaffold extends StatelessWidget {
       ),
       body: BlocBuilder<WorkTaskFormBloc, WorkTaskFormState>(
           buildWhen: (previous, current) =>
-              previous.isSaving != current.isSaving,
+              previous.showErrorMessages != current.showErrorMessages,
           builder: (context, state) {
-            return Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 7.0, horizontal: 11),
-                    child: Text(
-                      "Электронная почта",
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
+            return Form(
+              autovalidateMode: state.showErrorMessages
+                  ? AutovalidateMode.always
+                  : AutovalidateMode.disabled,
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 7.0, horizontal: 11),
+                        child: Text(
+                          "Название заявки",
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                      const NameField(),
+                      const SizedBox(height: 12.0),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 7.0, horizontal: 11),
+                        child: Text(
+                          "Магазин",
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                      const StoreField(),
+                      const SizedBox(height: 12.0),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 7.0, horizontal: 11),
+                        child: Text(
+                          "Вид работ",
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                      const TypeField(),
+                      const SizedBox(height: 12.0),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 7.0, horizontal: 11),
+                        child: Text(
+                          "Дата и время начала работ",
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                      const BeginDateField(),
+                      const SizedBox(height: 12.0),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 7.0, horizontal: 11),
+                        child: Text(
+                          "Дата и время окончания работ",
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                      const EndDateField(),
+                      const SizedBox(height: 12.0),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 7.0, horizontal: 11),
+                        child: Text(
+                          "Примечание",
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                      const DescriptionField(),
+                      const SizedBox(height: 12.0),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 7.0, horizontal: 11),
+                        child: Text(
+                          "Исполнитель",
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                      const WorkerCard(),
+                    ],
                   ),
-                  const NameField(),
-                  const SizedBox(height: 12.0),
-                  const TypeField(),
-                ],
+                ),
               ),
             );
           }),
@@ -131,7 +202,7 @@ class SavingInProgressOverlay extends StatelessWidget {
               const CircularProgressIndicator(),
               const SizedBox(height: 8),
               Text(
-                'Saving',
+                'Идёт сохранение...',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Colors.white,
                       fontSize: 16,

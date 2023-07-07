@@ -25,4 +25,14 @@ class Store with _$Store {
         name: StoreName("К11"),
         address: StoreAddress("г. Красноярск, ул. Пушкина, д. 1"),
       );
+
+  // TODO: убрать хардкод
+  static List<Store> predefinedStores = [
+    Store.defaultStore().copyWith(name: StoreName("К1")),
+    Store.defaultStore().copyWith(name: StoreName("К2")),
+    Store.defaultStore().copyWith(name: StoreName("К3")),
+    Store.defaultStore().copyWith(name: StoreName("К4")),
+    Store.defaultStore().copyWith(name: StoreName("К5")),
+    Store.defaultStore().copyWith(name: StoreName("К6")),
+  ];
 }

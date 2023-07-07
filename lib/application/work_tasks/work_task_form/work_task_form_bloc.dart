@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -60,20 +58,20 @@ class WorkTaskFormBloc extends Bloc<WorkTaskFormEvent, WorkTaskFormState> {
             ),
           );
         },
-        beginHourChanged: (e) async {
+        beginDateChanged: (e) async {
           emit(
             state.copyWith(
               workTask: state.workTask
-                  .copyWith(beginHour: WorkTaskBegin(e.beginHour)),
+                  .copyWith(beginDate: WorkTaskBegin(e.beginDate)),
               saveFailureOrSuccessOption: none(),
             ),
           );
         },
-        endHourChanged: (e) async {
+        endDateChanged: (e) async {
           emit(
             state.copyWith(
               workTask:
-                  state.workTask.copyWith(endHour: WorkTaskEnd(e.endHour)),
+                  state.workTask.copyWith(endDate: WorkTaskEnd(e.endDate)),
               saveFailureOrSuccessOption: none(),
             ),
           );
@@ -107,6 +105,15 @@ class WorkTaskFormBloc extends Bloc<WorkTaskFormEvent, WorkTaskFormState> {
               isSaving: false,
               showErrorMessages: true,
               saveFailureOrSuccessOption: optionOf(failureOrSuccess),
+            ),
+          );
+        },
+        descriptionChanged: (e) async {
+          emit(
+            state.copyWith(
+              workTask: state.workTask
+                  .copyWith(description: WorkTaskDescription(e.descriptionStr)),
+              saveFailureOrSuccessOption: none(),
             ),
           );
         },

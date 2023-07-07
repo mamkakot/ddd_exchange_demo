@@ -8,15 +8,19 @@ import 'package:hello_ddd/infrastructure/work_tasks/work_task_dtos.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
-@LazySingleton(as: IWorkTaskRepository, env: [Environment.prod])
+@LazySingleton(as: IWorkTaskRepository)
 class WorkTaskRepository implements IWorkTaskRepository {
-  late final FirebaseFirestore _firestore;
+  final FirebaseFirestore _firestore;
+
+  WorkTaskRepository(this._firestore);
 
   @override
   Stream<Either<WorkTaskFailure, List<WorkTask>>> watchAll() async* {
     final userDoc = await _firestore.userDocument();
+    print(userDoc.workTaskCollection);
+
     yield* userDoc.workTaskCollection
-        .orderBy('serverTimeStamp', descending: true)
+        . orderBy('serverTimeStamp', descending: true)
         .snapshots()
         .map(
           (snapshot) => right<WorkTaskFailure, List<WorkTask>>(
@@ -26,10 +30,11 @@ class WorkTaskRepository implements IWorkTaskRepository {
           ),
         )
         .onErrorReturnWith((e, st) {
-      if (e is FirebaseException && e.message!.contains('permission-denied')) {
+      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
+        print(e.toString());
         return left(const WorkTaskFailure.insufficientPermission());
       } else {
-        // log.error(e.toString());
+        print(e.toString());
         return left(const WorkTaskFailure.unexpected());
       }
     });
@@ -51,10 +56,9 @@ class WorkTaskRepository implements IWorkTaskRepository {
           ),
         )
         .onErrorReturnWith((e, st) {
-      if (e is FirebaseException && e.message!.contains('permission-denied')) {
+      if (e is FirebaseException && e.message!.contains('PERMISSION_DENIED')) {
         return left(const WorkTaskFailure.insufficientPermission());
       } else {
-        // log.error(e.toString());
         return left(const WorkTaskFailure.unexpected());
       }
     });
@@ -72,7 +76,7 @@ class WorkTaskRepository implements IWorkTaskRepository {
 
       return right(unit);
     } on FirebaseException catch (e) {
-      if (e.message!.contains('permission-denied')) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
         return left(const WorkTaskFailure.insufficientPermission());
       } else {
         return left(const WorkTaskFailure.unexpected());
@@ -90,7 +94,7 @@ class WorkTaskRepository implements IWorkTaskRepository {
 
       return right(unit);
     } on FirebaseException catch (e) {
-      if (e.message!.contains('permission-denied')) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
         return left(const WorkTaskFailure.insufficientPermission());
       } else if (e.message!.contains('object-not-found')) {
         return left(const WorkTaskFailure.unableToUpdate());
@@ -112,7 +116,7 @@ class WorkTaskRepository implements IWorkTaskRepository {
 
       return right(unit);
     } on FirebaseException catch (e) {
-      if (e.message!.contains('permission-denied')) {
+      if (e.message!.contains('PERMISSION_DENIED')) {
         return left(const WorkTaskFailure.insufficientPermission());
       } else if (e.message!.contains('object-not-found')) {
         return left(const WorkTaskFailure.unableToUpdate());

@@ -24,6 +24,26 @@ class ValueFailure<T> with _$ValueFailure<T> {
     required double min,
   }) = TooLittleHours<T>;
 
+  const factory ValueFailure.tooMuchRating({
+    required T failedValue,
+    required int max,
+  }) = TooMuchRating<T>;
+
+  const factory ValueFailure.tooLittleRating({
+    required T failedValue,
+    required int min,
+  }) = TooLittleRating<T>;
+
+  const factory ValueFailure.tooMuchWorkerRating({
+    required T failedValue,
+    required double max,
+  }) = TooMuchWorkerRating<T>;
+
+  const factory ValueFailure.tooLittleWorkerRating({
+    required T failedValue,
+    required double min,
+  }) = TooLittleWorkerRating<T>;
+
   const factory ValueFailure.empty({
     required T failedValue,
   }) = Empty<T>;

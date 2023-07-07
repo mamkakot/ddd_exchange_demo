@@ -31,19 +31,19 @@ class Password extends ValueObject<String> {
 }
 
 
-class WorkerName extends ValueObject<String> {
+class WorkerFullName extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
   static const maxLength = 300;
 
-  factory WorkerName(String input) {
-    return WorkerName._(
+  factory WorkerFullName(String input) {
+    return WorkerFullName._(
       validateMaxLength(input, maxLength).flatMap(validateStringNotEmpty),
     );
   }
 
-  const WorkerName._(this.value);
+  const WorkerFullName._(this.value);
 }
 
 class WorkerCode extends ValueObject<String> {
@@ -59,6 +59,22 @@ class WorkerCode extends ValueObject<String> {
   }
 
   const WorkerCode._(this.value);
+}
+class WorkerRating extends ValueObject<double> {
+  @override
+  final Either<ValueFailure<double>, double> value;
+
+  static const maxRating = 5.0;
+  static const minRating = 0.0;
+
+  factory WorkerRating(double input) {
+    return WorkerRating._(
+      validateMaxWorkerRating(input, maxRating)
+          .flatMap((val) => validateMinWorkerRating(val, minRating)),
+    );
+  }
+
+  const WorkerRating._(this.value);
 }
 
 

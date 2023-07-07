@@ -45,9 +45,10 @@ class WorkTaskWatcherBloc
           });
         },
         workTasksReceived: (e) async {
-          e.failureOrWorkTasks.fold(
-            (failure) => emit(WorkTaskWatcherState.loadFailed(failure)),
-            (workTasks) => emit(WorkTaskWatcherState.loadSuccess(workTasks)),
+          await e.failureOrWorkTasks.fold(
+            (failure) async => emit(WorkTaskWatcherState.loadFailed(failure)),
+            (workTasks) async =>
+                emit(WorkTaskWatcherState.loadSuccess(workTasks)),
           );
         },
       );

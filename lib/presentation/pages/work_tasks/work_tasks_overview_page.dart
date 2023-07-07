@@ -39,16 +39,16 @@ class WorkTasksOverviewPage extends StatelessWidget {
                   deleteFailure: (state) => FlushbarHelper.createError(
                           message: state.workTaskFailure.map(
                         unexpected: (_) =>
-                            'Unexpected error occurred while deleting, please contact support.',
+                            'Возникла неизвестная ошибка, свяжитесь с поддержкой',
                         insufficientPermission: (_) =>
-                            'Insufficient permissions ❌',
-                        unableToUpdate: (_) => 'Unable to update',
+                            'Недостаточно прав ❌',
+                        unableToUpdate: (_) => 'Невозможно обновить',
                       )).show(context));
             })
           ],
           child: Scaffold(
             appBar: AppBar(
-              title: const Text("Work tasks"),
+              title: const Text("Список заявок"),
               leading: IconButton(
                 icon: const Icon(Icons.exit_to_app),
                 onPressed: () {
@@ -62,7 +62,7 @@ class WorkTasksOverviewPage extends StatelessWidget {
             body: WorkTasksOverviewBody(),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                context.router.replace(WorkTaskFormRoute(editedWorkTask: null));
+                context.router.push(WorkTaskFormRoute(editedWorkTask: null));
               },
               child: const Icon(Icons.add),
             ),

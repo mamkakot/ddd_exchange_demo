@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hello_ddd/domain/core/value_objects.dart';
 import 'package:hello_ddd/domain/work_tasks/store.dart';
 import 'package:hello_ddd/domain/work_tasks/value_objects.dart';
+import 'package:hello_ddd/domain/work_tasks/worker.dart';
 
 import '../core/failures.dart';
 
@@ -18,11 +19,12 @@ class WorkTask with _$WorkTask {
     required WorkTaskType type,
     required Store store,
     required WorkTaskHours hours,
-    required WorkTaskBegin beginHour,
-    required WorkTaskEnd endHour,
+    required WorkTaskBegin beginDate,
+    required WorkTaskEnd endDate,
+    required WorkTaskRating? rating,
     required bool completed,
     // required Worker author,
-    // required Worker executor,
+    required Worker? worker,
     required WorkTaskDescription description,
   }) = _WorkTask;
 
@@ -30,12 +32,14 @@ class WorkTask with _$WorkTask {
         id: UniqueId(),
         name: WorkTaskName(''),
         type: WorkTaskType(WorkTaskType.predefinedTypes.first),
-        store: Store.defaultStore(),
-        hours: WorkTaskHours(0.0),
-        beginHour: WorkTaskBegin(DateTime.now()),
-        endHour: WorkTaskEnd(DateTime.now().add(const Duration(hours: 1))),
+        store: Store.predefinedStores.first,
+        worker: null,
+        hours: WorkTaskHours(8.0),
+        beginDate: WorkTaskBegin(DateTime.now()),
+        endDate: WorkTaskEnd(DateTime.now().add(const Duration(hours: 1))),
         description: WorkTaskDescription(''),
         completed: false,
+        rating: null,
       );
 }
 

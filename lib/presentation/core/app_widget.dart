@@ -16,12 +16,13 @@ class AppWidget extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              getIt<AuthBloc>()..add(const AuthEvent.authCheckRequested()),
+          create: (context) {
+            return getIt<AuthBloc>()..add(const AuthEvent.authCheckRequested());
+          },
         )
       ],
       child: MaterialApp.router(
-        title: 'Hello DDD!',
+        title: 'Тестовое приложение по заявкам',
         theme: ThemeData(
           brightness: Brightness.light,
           primaryColor: const Color.fromARGB(255, 0, 161, 153),
@@ -37,18 +38,32 @@ class AppWidget extends StatelessWidget {
           // Define the default `TextTheme`. Use this to specify the default
           // text styling for headlines, titles, bodies of text, and more.
           textTheme: const TextTheme(
-            displayLarge: TextStyle(fontSize: 72, fontWeight: FontWeight.bold),
-            titleLarge: TextStyle(fontSize: 36),
-            bodyMedium: TextStyle(fontSize: 14, fontFamily: 'Hind'),
-            bodySmall: TextStyle(
-              color: Colors.black,
-              fontSize: 14,
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w400,
-            ),
-            labelLarge: TextStyle(
-                fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
-          ),
+              displayLarge:
+                  TextStyle(fontSize: 42, fontWeight: FontWeight.bold),
+              titleLarge: TextStyle(fontSize: 24),
+              bodyMedium: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
+              bodySmall: TextStyle(
+                color: Colors.black,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+              labelLarge: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+              labelSmall: TextStyle(
+                fontSize: 12,
+                color: Colors.black,
+              ),
+              labelMedium: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              )),
           inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
@@ -58,7 +73,7 @@ class AppWidget extends StatelessWidget {
                 )),
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
-            fillColor: const Color.fromARGB(15, 0, 161, 153),
+            fillColor: Colors.white,
             filled: true,
           ),
           // floatingActionButtonTheme: FloatingActionButtonThemeData(

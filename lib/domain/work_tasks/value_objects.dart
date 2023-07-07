@@ -23,7 +23,7 @@ class WorkTaskDescription extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;
 
-  static const maxLength = 2000;
+  static const maxLength = 500;
 
   factory WorkTaskDescription(String input) {
     return WorkTaskDescription._(
@@ -78,6 +78,23 @@ class WorkTaskHours extends ValueObject<double> {
   const WorkTaskHours._(this.value);
 }
 
+class WorkTaskRating extends ValueObject<int> {
+  @override
+  final Either<ValueFailure<int>, int> value;
+
+  static const int minRating = 0;
+  static const int maxRating = 5;
+
+  factory WorkTaskRating(int input) {
+    return WorkTaskRating._(
+      validateMaxRating(input, maxRating)
+          .flatMap((val) => validateMinRating(val, minRating)),
+    );
+  }
+
+  const WorkTaskRating._(this.value);
+}
+
 class WorkTaskType extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;
@@ -114,33 +131,6 @@ class WorkTaskType extends ValueObject<String> {
 
   const WorkTaskType._(this.value);
 }
-//
-// class WorkTaskStore extends ValueObject<String> {
-//   @override
-//   final Either<ValueFailure<String>, String> value;
-//
-//   // TODO: remove hardcoded values
-//   static const List<String> predefinedStores = [
-//     'К10',
-//     'К11',
-//     'К12',
-//     'К13',
-//     'К14',
-//     'К15',
-//   ];
-//
-//   factory WorkTaskStore(String input) {
-//     return WorkTaskStore._(
-//       right(input),
-//     );
-//   }
-//
-//   factory WorkTaskStore.fromUniqueString(String uniqueString) {
-//     return WorkTaskStore._(right(uniqueString));
-//   }
-//
-//   const WorkTaskStore._(this.value);
-// }
 
 class StoreName extends ValueObject<String> {
   @override

@@ -48,6 +48,43 @@ Either<ValueFailure<double>, double> validateMinHours(
   }
 }
 
+Either<ValueFailure<double>, double> validateMaxWorkerRating(
+    double input, double maxWorkerRating) {
+  if (input <= maxWorkerRating) {
+    return right(input);
+  } else {
+    return left(ValueFailure.tooMuchWorkerRating(
+        failedValue: input, max: maxWorkerRating));
+  }
+}
+
+Either<ValueFailure<double>, double> validateMinWorkerRating(
+    double input, double minWorkerRating) {
+  if (input > minWorkerRating) {
+    return right(input);
+  } else {
+    return left(ValueFailure.tooLittleWorkerRating(
+        failedValue: input, min: minWorkerRating));
+  }
+}
+
+Either<ValueFailure<int>, int> validateMaxRating(int input, int maxRating) {
+  if (input <= maxRating) {
+    return right(input);
+  } else {
+    return left(ValueFailure.tooMuchRating(failedValue: input, max: maxRating));
+  }
+}
+
+Either<ValueFailure<int>, int> validateMinRating(int input, int minRating) {
+  if (input >= minRating) {
+    return right(input);
+  } else {
+    return left(
+        ValueFailure.tooLittleRating(failedValue: input, min: minRating));
+  }
+}
+
 Either<ValueFailure<String>, String> validateEmailAddress(String input) {
   const emailRegex =
       r"""^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+""";
@@ -66,7 +103,8 @@ Either<ValueFailure<String>, String> validatePassword(String input) {
   }
 }
 
-Either<ValueFailure<String>, String> validateUserCode(String input, int length) {
+Either<ValueFailure<String>, String> validateUserCode(
+    String input, int length) {
   const codeRegex = r"""^[0-9]+$""";
   if (RegExp(codeRegex).hasMatch(input) && input.length == length) {
     return right(input);

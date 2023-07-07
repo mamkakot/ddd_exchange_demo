@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -21,6 +20,7 @@ class NameField extends HookWidget {
       child: SizedBox(
         height: 57,
         child: TextFormField(
+          style: Theme.of(context).textTheme.bodySmall,
           controller: textEditingController,
           maxLength: WorkTaskName.maxLength,
           onChanged: (value) => context
@@ -35,8 +35,8 @@ class NameField extends HookWidget {
               .fold(
                   (l) => l.maybeMap(
                       orElse: () => null,
-                      empty: (f) => 'Cannot be empty',
-                      valueTooLong: (f) => 'Value too long'),
+                      empty: (f) => 'Не может быть пустым',
+                      valueTooLong: (f) => 'Слишком много символов'),
                   (r) => null),
           maxLines: 1,
           decoration: InputDecoration(
