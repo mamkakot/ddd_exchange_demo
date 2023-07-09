@@ -1,4 +1,4 @@
- import 'dart:async';
+import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
@@ -75,8 +75,7 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
       ));
 
       result = await forwardedCall(
-              emailAddress: state.emailAddress, password: state.password)
-          .whenComplete(() => null);
+          emailAddress: state.emailAddress, password: state.password);
     }
 
     emit(state.copyWith(

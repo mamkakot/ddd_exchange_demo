@@ -6,8 +6,8 @@ import 'package:hello_ddd/application/work_tasks/work_task_actor/work_task_actor
 import 'package:hello_ddd/application/work_tasks/work_task_watcher/work_task_watcher_bloc.dart';
 import 'package:hello_ddd/injection.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:hello_ddd/presentation/pages/work_tasks/widgets/uncompleted_switch.dart';
-import 'package:hello_ddd/presentation/pages/work_tasks/widgets/work_tasks_overview_body.dart';
+import 'package:hello_ddd/presentation/pages/work_tasks_overview/widgets/uncompleted_switch.dart';
+import 'package:hello_ddd/presentation/pages/work_tasks_overview/widgets/work_tasks_overview_body.dart';
 import 'package:hello_ddd/presentation/routes/router.dart';
 
 @RoutePage()
@@ -59,7 +59,7 @@ class WorkTasksOverviewPage extends StatelessWidget {
                 UncompletedSwitch(),
               ],
             ),
-            body: WorkTasksOverviewBody(),
+            body: const WorkTasksOverviewBody(),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
                 context.router.push(WorkTaskFormRoute(editedWorkTask: null));

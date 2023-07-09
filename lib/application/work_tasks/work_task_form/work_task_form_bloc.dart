@@ -15,7 +15,7 @@ part 'work_task_form_state.dart';
 
 part 'work_task_form_bloc.freezed.dart';
 
-@injectable
+@Injectable()
 class WorkTaskFormBloc extends Bloc<WorkTaskFormEvent, WorkTaskFormState> {
   final IWorkTaskRepository _workTaskRepository;
 

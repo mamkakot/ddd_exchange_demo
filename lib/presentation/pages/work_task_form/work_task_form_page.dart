@@ -6,15 +6,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hello_ddd/application/work_tasks/work_task_form/work_task_form_bloc.dart';
 import 'package:hello_ddd/domain/work_tasks/work_task.dart';
 import 'package:hello_ddd/injection.dart';
-import 'package:hello_ddd/presentation/pages/work_tasks/widgets/work_task_form_widgets/begin_date_field.dart';
-import 'package:hello_ddd/presentation/pages/work_tasks/widgets/work_task_form_widgets/description_field.dart';
-import 'package:hello_ddd/presentation/pages/work_tasks/widgets/work_task_form_widgets/name_field.dart';
-import 'package:hello_ddd/presentation/pages/work_tasks/widgets/work_task_form_widgets/store_field.dart';
-import 'package:hello_ddd/presentation/pages/work_tasks/widgets/work_task_form_widgets/type_field.dart';
-import 'package:hello_ddd/presentation/pages/work_tasks/widgets/work_task_form_widgets/worker_card.dart';
+import 'package:hello_ddd/presentation/pages/work_task_form/widgets/begin_date_field.dart';
+import 'package:hello_ddd/presentation/pages/work_task_form/widgets/description_field.dart';
+import 'package:hello_ddd/presentation/pages/work_task_form/widgets/end_date_field.dart';
+import 'package:hello_ddd/presentation/pages/work_task_form/widgets/name_field.dart';
+import 'package:hello_ddd/presentation/pages/work_task_form/widgets/store_field.dart';
+import 'package:hello_ddd/presentation/pages/work_task_form/widgets/type_field.dart';
+import 'package:hello_ddd/presentation/pages/work_task_form/widgets/worker_card.dart';
 
-import '../../../routes/router.dart';
-import '../widgets/work_task_form_widgets/end_date_field.dart';
+import 'package:hello_ddd/presentation/routes/router.dart';
 
 @RoutePage()
 class WorkTaskFormPage extends StatelessWidget {
@@ -51,7 +51,7 @@ class WorkTaskFormPage extends StatelessWidget {
         buildWhen: (previous, current) => previous.isSaving != current.isSaving,
         builder: (context, state) {
           return Stack(
-            children: <Widget>[
+            children: [
               const WorkTaskFormPageScaffold(),
               SavingInProgressOverlay(isSaving: state.isSaving),
             ],
@@ -71,7 +71,7 @@ class WorkTaskFormPageScaffold extends StatelessWidget {
       appBar: AppBar(
         title: BlocBuilder<WorkTaskFormBloc, WorkTaskFormState>(
           buildWhen: (previous, current) =>
-              previous.isSaving != current.isSaving,
+              previous.isEditing != current.isEditing,
           builder: (context, state) => Text(
               state.isEditing ? "Редактирование заявки" : "Создание заявки"),
         ),

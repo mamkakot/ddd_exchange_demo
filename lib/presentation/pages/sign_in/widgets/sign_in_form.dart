@@ -32,7 +32,10 @@ class SignInForm extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: state.emailAddress.isValid() || !state.showErrorMessages ? 35 : 57,
+                  height:
+                      state.emailAddress.isValid() || !state.showErrorMessages
+                          ? 35
+                          : 57,
                   child: TextFormField(
                     maxLines: 1,
                     decoration: InputDecoration(
@@ -66,7 +69,9 @@ class SignInForm extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: state.password.isValid() || !state.showErrorMessages ? 35 : 57,
+                  height: state.password.isValid() || !state.showErrorMessages
+                      ? 35
+                      : 57,
                   child: TextFormField(
                     maxLines: 1,
                     decoration: InputDecoration(
@@ -112,7 +117,11 @@ class SignInForm extends StatelessWidget {
                         .add(const SignInFormEvent.signInWithGooglePressed());
                   },
                   child: const Text('Войти с помощью Google'),
-                )
+                ),
+                if (state.isSubmitting) ...[
+                  const SizedBox(height: 8),
+                  const LinearProgressIndicator(value: null),
+                ]
               ],
             ),
           ),

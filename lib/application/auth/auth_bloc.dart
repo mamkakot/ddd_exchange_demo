@@ -18,7 +18,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await event.map(
         authCheckRequested: (e) async {
           final userOption = await _authRepository.getSignedInUser();
-          print("useroption: $userOption");
           await userOption.fold(
             () async => emit(const AuthState.unauthenticated()),
             (_) async => emit(const AuthState.authenticated()),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hello_ddd/application/work_tasks/work_task_watcher/work_task_watcher_bloc.dart';
 import 'package:hello_ddd/domain/work_tasks/work_task.dart';
-import 'package:hello_ddd/presentation/pages/work_tasks/widgets/work_tasks_overview_widgets/work_task_card.dart';
+import 'package:hello_ddd/presentation/pages/work_tasks_overview/widgets/work_task_card.dart';
 
 class WorkTasksOverviewBody extends StatelessWidget {
   const WorkTasksOverviewBody({super.key});
@@ -18,7 +18,7 @@ class WorkTasksOverviewBody extends StatelessWidget {
               ),
           loadSuccess: (state) {
             return Padding(
-              padding: const EdgeInsets.all(28.0),
+              padding: const EdgeInsets.symmetric(horizontal: 28.0),
               child: ListView.builder(
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
@@ -31,7 +31,11 @@ class WorkTasksOverviewBody extends StatelessWidget {
                     );
                   } else {
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
+                      padding: EdgeInsets.only(
+                        bottom:
+                            index == state.workTasks.length - 1 ? 28.0 : 0.0,
+                        top: index != 0 ? 20.0 : 28.0,
+                      ),
                       child: WorkTaskCard(workTask: workTask),
                     );
                   }
