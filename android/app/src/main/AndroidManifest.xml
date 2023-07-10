@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hello_ddd">
    <application
-        android:label="hello_ddd"
+        android:label="Биржа аутсорса"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
