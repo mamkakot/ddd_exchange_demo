@@ -10,6 +10,7 @@ import 'package:hello_ddd/presentation/pages/work_task_form/widgets/begin_date_f
 import 'package:hello_ddd/presentation/pages/work_task_form/widgets/description_field.dart';
 import 'package:hello_ddd/presentation/pages/work_task_form/widgets/end_date_field.dart';
 import 'package:hello_ddd/presentation/pages/work_task_form/widgets/name_field.dart';
+import 'package:hello_ddd/presentation/pages/work_task_form/widgets/rating_field.dart';
 import 'package:hello_ddd/presentation/pages/work_task_form/widgets/store_field.dart';
 import 'package:hello_ddd/presentation/pages/work_task_form/widgets/type_field.dart';
 import 'package:hello_ddd/presentation/pages/work_task_form/widgets/worker_card.dart';
@@ -87,7 +88,8 @@ class WorkTaskFormPageScaffold extends StatelessWidget {
       ),
       body: BlocBuilder<WorkTaskFormBloc, WorkTaskFormState>(
           buildWhen: (previous, current) =>
-              previous.showErrorMessages != current.showErrorMessages,
+              previous.showErrorMessages != current.showErrorMessages ||
+              previous.workTask.rating != current.workTask.rating,
           builder: (context, state) {
             return Form(
               autovalidateMode: state.showErrorMessages
@@ -170,6 +172,26 @@ class WorkTaskFormPageScaffold extends StatelessWidget {
                         ),
                       ),
                       const WorkerCard(),
+                      if (context
+                          .read<WorkTaskFormBloc>()
+                          .state
+                          .workTask
+                          .completed)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 12.0),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 7.0, horizontal: 11),
+                              child: Text(
+                                "Оценка выполнения задачи",
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ),
+                            const RatingField(),
+                          ],
+                        ),
                     ],
                   ),
                 ),

@@ -22,5 +22,7 @@ class WorkTaskFormEvent with _$WorkTaskFormEvent {
 
   const factory WorkTaskFormEvent.storeChanged(Store store) = _StoreChanged;
 
+  const factory WorkTaskFormEvent.ratingChanged(int rating) = _RatingChanged;
+
   const factory WorkTaskFormEvent.saved() = _Saved;
 }

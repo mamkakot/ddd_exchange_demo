@@ -55,6 +55,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   expandable: ^5.0.1
   chips_choice: ^3.0.0
+  another_flushbar: ^1.12.29
 
   # Firebase
   firebase_core: ^2.10.0
@@ -67,7 +68,6 @@ dependencies:
   injectable: ^2.1.0
 
   # Bells and whistles
-  another_flushbar: ^1.12.29
   rxdart: ^0.27.7
   flutter_hooks: ^0.18.6
 

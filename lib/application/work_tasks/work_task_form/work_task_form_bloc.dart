@@ -22,102 +22,96 @@ class WorkTaskFormBloc extends Bloc<WorkTaskFormEvent, WorkTaskFormState> {
   WorkTaskFormBloc(this._workTaskRepository)
       : super(WorkTaskFormState.initial()) {
     on<WorkTaskFormEvent>((event, emit) async {
-      await event.map(
-        initialized: (e) async {
-          await e.initialWorkTaskOption.fold(
-            () async => state,
-            (initialWorkTask) async => emit(
-              state.copyWith(
-                workTask: initialWorkTask,
-                isEditing: true,
-              ),
-            ),
-          );
-        },
-        nameChanged: (e) async {
-          emit(
+      await event.map(initialized: (e) async {
+        await e.initialWorkTaskOption.fold(
+          () async => state,
+          (initialWorkTask) async => emit(
             state.copyWith(
-              workTask: state.workTask.copyWith(name: WorkTaskName(e.nameStr)),
-              saveFailureOrSuccessOption: none(),
+              workTask: initialWorkTask,
+              isEditing: true,
             ),
-          );
-        },
-        typeChanged: (e) async {
-          emit(
-            state.copyWith(
-              workTask: state.workTask.copyWith(type: WorkTaskType(e.type)),
-              saveFailureOrSuccessOption: none(),
-            ),
-          );
-        },
-        hoursChanged: (e) async {
-          emit(
-            state.copyWith(
-              workTask: state.workTask.copyWith(hours: WorkTaskHours(e.hours)),
-              saveFailureOrSuccessOption: none(),
-            ),
-          );
-        },
-        beginDateChanged: (e) async {
-          emit(
-            state.copyWith(
-              workTask: state.workTask
-                  .copyWith(beginDate: WorkTaskBegin(e.beginDate)),
-              saveFailureOrSuccessOption: none(),
-            ),
-          );
-        },
-        endDateChanged: (e) async {
-          emit(
-            state.copyWith(
-              workTask:
-                  state.workTask.copyWith(endDate: WorkTaskEnd(e.endDate)),
-              saveFailureOrSuccessOption: none(),
-            ),
-          );
-        },
-        storeChanged: (e) async {
-          emit(
-            state.copyWith(
-              workTask: state.workTask.copyWith(store: e.store),
-              saveFailureOrSuccessOption: none(),
-            ),
-          );
-        },
-        saved: (e) async {
-          Either<WorkTaskFailure, Unit>? failureOrSuccess;
+          ),
+        );
+      }, nameChanged: (e) async {
+        emit(
+          state.copyWith(
+            workTask: state.workTask.copyWith(name: WorkTaskName(e.nameStr)),
+            saveFailureOrSuccessOption: none(),
+          ),
+        );
+      }, typeChanged: (e) async {
+        emit(
+          state.copyWith(
+            workTask: state.workTask.copyWith(type: WorkTaskType(e.type)),
+            saveFailureOrSuccessOption: none(),
+          ),
+        );
+      }, hoursChanged: (e) async {
+        emit(
+          state.copyWith(
+            workTask: state.workTask.copyWith(hours: WorkTaskHours(e.hours)),
+            saveFailureOrSuccessOption: none(),
+          ),
+        );
+      }, beginDateChanged: (e) async {
+        emit(
+          state.copyWith(
+            workTask:
+                state.workTask.copyWith(beginDate: WorkTaskBegin(e.beginDate)),
+            saveFailureOrSuccessOption: none(),
+          ),
+        );
+      }, endDateChanged: (e) async {
+        emit(
+          state.copyWith(
+            workTask: state.workTask.copyWith(endDate: WorkTaskEnd(e.endDate)),
+            saveFailureOrSuccessOption: none(),
+          ),
+        );
+      }, storeChanged: (e) async {
+        emit(
+          state.copyWith(
+            workTask: state.workTask.copyWith(store: e.store),
+            saveFailureOrSuccessOption: none(),
+          ),
+        );
+      }, saved: (e) async {
+        Either<WorkTaskFailure, Unit>? failureOrSuccess;
 
-          emit(
-            state.copyWith(
-              isSaving: true,
-              saveFailureOrSuccessOption: none(),
-            ),
-          );
+        emit(
+          state.copyWith(
+            isSaving: true,
+            saveFailureOrSuccessOption: none(),
+          ),
+        );
 
-          if (state.workTask.failureOption.isNone()) {
-            failureOrSuccess = state.isEditing
-                ? await _workTaskRepository.update(state.workTask)
-                : await _workTaskRepository.create(state.workTask);
-          }
+        if (state.workTask.failureOption.isNone()) {
+          failureOrSuccess = state.isEditing
+              ? await _workTaskRepository.update(state.workTask)
+              : await _workTaskRepository.create(state.workTask);
+        }
 
-          emit(
-            state.copyWith(
-              isSaving: false,
-              showErrorMessages: true,
-              saveFailureOrSuccessOption: optionOf(failureOrSuccess),
-            ),
-          );
-        },
-        descriptionChanged: (e) async {
-          emit(
-            state.copyWith(
-              workTask: state.workTask
-                  .copyWith(description: WorkTaskDescription(e.descriptionStr)),
-              saveFailureOrSuccessOption: none(),
-            ),
-          );
-        },
-      );
+        emit(
+          state.copyWith(
+            isSaving: false,
+            showErrorMessages: true,
+            saveFailureOrSuccessOption: optionOf(failureOrSuccess),
+          ),
+        );
+      }, descriptionChanged: (e) async {
+        emit(state.copyWith(
+          workTask: state.workTask
+              .copyWith(description: WorkTaskDescription(e.descriptionStr)),
+          saveFailureOrSuccessOption: none(),
+        ));
+      }, ratingChanged: (e) async {
+        emit(
+          state.copyWith(
+            workTask: state.workTask.copyWith(rating: WorkTaskRating(e.rating)),
+            saveFailureOrSuccessOption: none(),
+          ),
+        );
+      });
     });
   }
 }
