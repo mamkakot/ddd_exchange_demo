@@ -14,12 +14,4 @@ class Worker with _$Worker {
     required WorkerPosition position,
     required WorkerRating rating,
   }) = _Worker;
-
-  factory Worker.defaultWorker() => Worker(
-    id: UniqueId(),
-    fullName: WorkerFullName("Иванов Иван Иванович"),
-    code: WorkerCode("000001"),
-    position: WorkerPosition("Грузчик"),
-    rating: WorkerRating(4.5),
-  );
 }
