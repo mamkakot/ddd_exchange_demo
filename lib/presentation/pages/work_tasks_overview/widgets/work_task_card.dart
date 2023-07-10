@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hello_ddd/application/work_tasks/work_task_actor/work_task_actor_bloc.dart';
 
 import 'package:hello_ddd/domain/work_tasks/work_task.dart';
 import 'package:hello_ddd/presentation/routes/router.dart';
@@ -28,6 +30,10 @@ class WorkTaskCard extends StatelessWidget {
         child: InkWell(
           onTap: () {
             context.router.push(WorkTaskFormRoute(editedWorkTask: workTask));
+          },
+          onLongPress: () {
+            final workTaskActorBloc = context.read<WorkTaskActorBloc>();
+            _showDeletionDialog(context, workTaskActorBloc);
           },
           child: Container(
             decoration: ShapeDecoration(
@@ -95,6 +101,41 @@ class WorkTaskCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _showDeletionDialog(
+      BuildContext context, WorkTaskActorBloc workTaskActorBloc) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Удалить заявку?',
+            style: Theme.of(context).textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+          ),
+          content: Text(
+            'Название заявки: "${workTask.name.getOrCrash()}"',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          actions: <Widget>[
+            OutlinedButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Отмена'),
+            ),
+            OutlinedButton(
+              onPressed: () {
+                workTaskActorBloc.add(WorkTaskActorEvent.deleted(workTask));
+                Navigator.pop(context);
+              },
+              child: const Text('Удалить'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
