@@ -116,8 +116,8 @@ class WorkTaskCard extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           content: Text(
-            'Название заявки: "${workTask.name.getOrCrash()}"',
-            maxLines: 1,
+            'Заявка "${workTask.name.getOrCrash()}" будет удалена!',
+            maxLines: 4,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodySmall,
           ),

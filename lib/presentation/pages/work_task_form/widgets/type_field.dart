@@ -11,13 +11,13 @@ class TypeField extends StatelessWidget {
     String dropdownValue =
         context.read<WorkTaskFormBloc>().state.workTask.type.getOrCrash();
 
-    return BlocListener<WorkTaskFormBloc, WorkTaskFormState>(
-      listenWhen: (previous, current) =>
+    return BlocConsumer<WorkTaskFormBloc, WorkTaskFormState>(
+      buildWhen: (previous, current) =>
           previous.workTask.type != current.workTask.type,
       listener: (context, state) {
         dropdownValue = state.workTask.type.getOrCrash();
       },
-      child: SizedBox(
+      builder: (context, state) => SizedBox(
         height: 35,
         child: DropdownButtonFormField<String>(
           isExpanded: true,

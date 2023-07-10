@@ -54,6 +54,7 @@ dependencies:
   flutter_datetime_picker_bdaya: ^3.0.2
   flutter_rating_bar: ^4.0.1
   expandable: ^5.0.1
+  chips_choice: ^3.0.0
 
   # Firebase
   firebase_core: ^2.10.0

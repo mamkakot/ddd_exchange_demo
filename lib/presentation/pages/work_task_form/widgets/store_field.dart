@@ -8,23 +8,24 @@ class StoreField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Store dropdownValue = context.read<WorkTaskFormBloc>().state.workTask.store;
+    String dropdownValue =
+        context.read<WorkTaskFormBloc>().state.workTask.store.name.getOrCrash();
 
-    return BlocListener<WorkTaskFormBloc, WorkTaskFormState>(
-      listenWhen: (previous, current) =>
-          previous.workTask.type != current.workTask.type,
+    return BlocConsumer<WorkTaskFormBloc, WorkTaskFormState>(
+      buildWhen: (previous, current) =>
+          previous.workTask.store.name != current.workTask.store.name,
       listener: (context, state) {
-        dropdownValue = state.workTask.store;
+        dropdownValue = state.workTask.store.name.getOrCrash();
       },
-      child: SizedBox(
+      builder: (contex, state) => SizedBox(
         height: 35,
-        child: DropdownButtonFormField<Store>(
+        child: DropdownButtonFormField<String>(
           isExpanded: true,
           value: dropdownValue,
           icon: const Icon(Icons.keyboard_arrow_down_outlined),
           items: Store.predefinedStores
-              .map<DropdownMenuItem<Store>>((Store value) => DropdownMenuItem(
-                    value: value,
+              .map<DropdownMenuItem<String>>((Store value) => DropdownMenuItem(
+                    value: value.name.getOrCrash(),
                     child: Text(
                       value.name.getOrCrash(),
                       overflow: TextOverflow.ellipsis,
@@ -32,9 +33,9 @@ class StoreField extends StatelessWidget {
                     ),
                   ))
               .toList(),
-          onChanged: (Store? value) => context
-              .read<WorkTaskFormBloc>()
-              .add(WorkTaskFormEvent.storeChanged(value!)),
+          onChanged: (String? value) => context.read<WorkTaskFormBloc>().add(
+              WorkTaskFormEvent.storeChanged(Store.predefinedStores.singleWhere(
+                  (element) => element.name.getOrCrash() == value))),
           // decoration: InputDecoration(),
         ),
       ),
