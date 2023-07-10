@@ -20,7 +20,7 @@ class WorkTaskRepository implements IWorkTaskRepository {
     print(userDoc.workTaskCollection);
 
     yield* userDoc.workTaskCollection
-        . orderBy('serverTimeStamp', descending: true)
+        .orderBy('beginDate', descending: false)
         .snapshots()
         .map(
           (snapshot) => right<WorkTaskFailure, List<WorkTask>>(
@@ -44,7 +44,7 @@ class WorkTaskRepository implements IWorkTaskRepository {
   Stream<Either<WorkTaskFailure, List<WorkTask>>> watchUncompleted() async* {
     final userDoc = await _firestore.userDocument();
     yield* userDoc.workTaskCollection
-        .orderBy('serverTimeStamp', descending: true)
+        .orderBy('beginDate', descending: false)
         .snapshots()
         .map(
           (snapshot) => snapshot.docs

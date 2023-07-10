@@ -26,7 +26,7 @@ class ErrorWorkTaskCard extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Text(
-                'Ошибка при загрузке задачи. Пожалуйста, свяжитесь с поддержкой.',
+                'Ошибка при загрузке данных. Пожалуйста, свяжитесь с поддержкой.',
                 style: Theme.of(context)
                     .primaryTextTheme
                     .bodyMedium
