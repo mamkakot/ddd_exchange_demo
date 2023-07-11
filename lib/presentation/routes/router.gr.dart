@@ -33,6 +33,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const WorkTasksOverviewPage(),
       );
     },
+    WorkTaskFormRoute.name: (routeData) {
+      final args = routeData.argsAs<WorkTaskFormRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WorkTaskFormPage(
+          key: args.key,
+          editedWorkTask: args.editedWorkTask,
+        ),
+      );
+    },
   };
 }
 
@@ -76,4 +86,42 @@ class WorkTasksOverviewRoute extends PageRouteInfo<void> {
   static const String name = 'WorkTasksOverviewRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [WorkTaskFormPage]
+class WorkTaskFormRoute extends PageRouteInfo<WorkTaskFormRouteArgs> {
+  WorkTaskFormRoute({
+    Key? key,
+    required WorkTask? editedWorkTask,
+    List<PageRouteInfo>? children,
+  }) : super(
+          WorkTaskFormRoute.name,
+          args: WorkTaskFormRouteArgs(
+            key: key,
+            editedWorkTask: editedWorkTask,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'WorkTaskFormRoute';
+
+  static const PageInfo<WorkTaskFormRouteArgs> page =
+      PageInfo<WorkTaskFormRouteArgs>(name);
+}
+
+class WorkTaskFormRouteArgs {
+  const WorkTaskFormRouteArgs({
+    this.key,
+    required this.editedWorkTask,
+  });
+
+  final Key? key;
+
+  final WorkTask? editedWorkTask;
+
+  @override
+  String toString() {
+    return 'WorkTaskFormRouteArgs{key: $key, editedWorkTask: $editedWorkTask}';
+  }
 }
