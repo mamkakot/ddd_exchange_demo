@@ -15,8 +15,6 @@ import 'package:hello_ddd/presentation/pages/work_task_form/widgets/store_field.
 import 'package:hello_ddd/presentation/pages/work_task_form/widgets/type_field.dart';
 import 'package:hello_ddd/presentation/pages/work_task_form/widgets/worker_card.dart';
 
-import 'package:hello_ddd/presentation/routes/router.dart';
-
 @RoutePage()
 class WorkTaskFormPage extends StatelessWidget {
   final WorkTask? editedWorkTask;
@@ -44,7 +42,7 @@ class WorkTaskFormPage extends StatelessWidget {
                 unableToUpdate: (_) => 'Невоможно обновить',
               )).show(context),
               (_) {
-                context.router.replace(const WorkTasksOverviewRoute());
+                context.router.pop();
               },
             ),
           );
@@ -95,105 +93,103 @@ class WorkTaskFormPageScaffold extends StatelessWidget {
               autovalidateMode: state.showErrorMessages
                   ? AutovalidateMode.always
                   : AutovalidateMode.disabled,
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 7.0, horizontal: 11),
-                        child: Text(
-                          "Название заявки",
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: ListView(
+                  physics: const BouncingScrollPhysics(),
+                  children: [
+                    const SizedBox(height: 32.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 7.0, horizontal: 11),
+                      child: Text(
+                        "Название заявки",
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      const NameField(),
-                      const SizedBox(height: 12.0),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 7.0, horizontal: 11),
-                        child: Text(
-                          "Магазин",
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
+                    ),
+                    const NameField(),
+                    const SizedBox(height: 12.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 7.0, horizontal: 11),
+                      child: Text(
+                        "Магазин",
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      const StoreField(),
-                      const SizedBox(height: 12.0),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 7.0, horizontal: 11),
-                        child: Text(
-                          "Вид работ",
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
+                    ),
+                    const StoreField(),
+                    const SizedBox(height: 12.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 7.0, horizontal: 11),
+                      child: Text(
+                        "Вид работ",
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      const TypeField(),
-                      const SizedBox(height: 12.0),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 7.0, horizontal: 11),
-                        child: Text(
-                          "Дата и время начала работ",
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
+                    ),
+                    const TypeField(),
+                    const SizedBox(height: 12.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 7.0, horizontal: 11),
+                      child: Text(
+                        "Дата и время начала работ",
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      const BeginDateField(),
-                      const SizedBox(height: 12.0),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 7.0, horizontal: 11),
-                        child: Text(
-                          "Дата и время окончания работ",
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
+                    ),
+                    const BeginDateField(),
+                    const SizedBox(height: 12.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 7.0, horizontal: 11),
+                      child: Text(
+                        "Дата и время окончания работ",
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      const EndDateField(),
-                      const SizedBox(height: 12.0),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 7.0, horizontal: 11),
-                        child: Text(
-                          "Примечание",
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
+                    ),
+                    const EndDateField(),
+                    const SizedBox(height: 12.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 7.0, horizontal: 11),
+                      child: Text(
+                        "Примечание",
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      const DescriptionField(),
-                      const SizedBox(height: 12.0),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 7.0, horizontal: 11),
-                        child: Text(
-                          "Исполнитель",
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
+                    ),
+                    const DescriptionField(),
+                    const SizedBox(height: 12.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 7.0, horizontal: 11),
+                      child: Text(
+                        "Исполнитель",
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      const WorkerCard(),
-                      if (context
-                          .read<WorkTaskFormBloc>()
-                          .state
-                          .workTask
-                          .completed)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 12.0),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 7.0, horizontal: 11),
-                              child: Text(
-                                "Оценка выполнения задачи",
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
+                    ),
+                    const WorkerCard(),
+                    if (context
+                        .read<WorkTaskFormBloc>()
+                        .state
+                        .workTask
+                        .completed)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 12.0),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 7.0, horizontal: 11),
+                            child: Text(
+                              "Оценка выполнения задачи",
+                              style: Theme.of(context).textTheme.bodySmall,
                             ),
-                            const RatingField(),
-                          ],
-                        ),
-                    ],
-                  ),
+                          ),
+                          const RatingField(),
+                        ],
+                      ),
+                    const SizedBox(height: 32.0),
+                  ],
                 ),
               ),
             );

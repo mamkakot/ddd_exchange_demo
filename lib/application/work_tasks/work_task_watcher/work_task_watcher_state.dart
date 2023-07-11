@@ -6,7 +6,7 @@ class WorkTaskWatcherState with _$WorkTaskWatcherState {
 
   const factory WorkTaskWatcherState.loadInProgress() = _LoadInProgress;
 
-  const factory WorkTaskWatcherState.loadSuccess(List<WorkTask> workTasks) =
+  const factory WorkTaskWatcherState.loadSuccess(List<WorkTask> workTasks, List<DateTime> workTaskDates) =
       _LoadSuccess;
 
   const factory WorkTaskWatcherState.loadFailed(

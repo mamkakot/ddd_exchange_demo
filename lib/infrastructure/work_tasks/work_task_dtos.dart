@@ -28,7 +28,6 @@ abstract class WorkTaskDTO implements _$WorkTaskDTO {
     @TimestampConverter() required DateTime beginDate,
     @TimestampConverter() required DateTime endDate,
     required StoreDTO store,
-    @ServerTimestampConverter() required FieldValue serverTimeStamp,
     @JsonKey(includeIfNull: false) required WorkerDTO? worker,
   }) = _WorkTaskDTO;
 
@@ -46,7 +45,6 @@ abstract class WorkTaskDTO implements _$WorkTaskDTO {
           : null,
       rating: workTask.rating?.getOrCrash(),
       endDate: workTask.endDate.getOrCrash(),
-      serverTimeStamp: FieldValue.serverTimestamp(),
       completed: workTask.completed,
     );
   }
@@ -73,18 +71,6 @@ abstract class WorkTaskDTO implements _$WorkTaskDTO {
   factory WorkTaskDTO.fromFirestore(DocumentSnapshot doc) =>
       WorkTaskDTO.fromJson(doc.data() as Map<String, dynamic>)
           .copyWith(id: doc.id);
-}
-
-class ServerTimestampConverter implements JsonConverter<FieldValue, Object> {
-  const ServerTimestampConverter();
-
-  @override
-  FieldValue fromJson(Object json) {
-    return FieldValue.serverTimestamp();
-  }
-
-  @override
-  Object toJson(FieldValue fieldValue) => fieldValue;
 }
 
 class TimestampConverter implements JsonConverter<DateTime, Timestamp> {

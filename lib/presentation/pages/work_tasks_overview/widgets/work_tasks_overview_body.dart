@@ -1,4 +1,3 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hello_ddd/application/work_tasks/work_task_watcher/work_task_watcher_bloc.dart';
@@ -21,16 +20,6 @@ class WorkTasksOverviewBody extends StatelessWidget {
           child: CircularProgressIndicator(),
         ),
         loadSuccess: (state) {
-          var workTaskDates = state.workTasks
-              .map((e) => e.beginDate.getOrCrash().copyWith(
-                    hour: 0,
-                    minute: 0,
-                    millisecond: 0,
-                    microsecond: 0,
-                    second: 0,
-                  ))
-              .toSet()
-              .toList();
           return state.workTasks.isEmpty
               ? const Center(
                   child: Text(
@@ -47,46 +36,45 @@ class WorkTasksOverviewBody extends StatelessWidget {
                     ),
                     // TODO: добавить chip'ы
                     Expanded(
-                      child: SingleChildScrollView(
+                      child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
-                        child: ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: workTaskDates.length,
-                          itemBuilder: (context, datesIndex) {
-                            final date = workTaskDates[datesIndex];
+                        shrinkWrap: true,
+                        itemCount: state.workTaskDates.length,
+                        itemBuilder: (context, datesIndex) {
+                          final date = state.workTaskDates[datesIndex];
 
-                            final workTasks = state.workTasks
-                                .where((element) =>
-                                    element.beginDate
-                                        .getOrCrash()
-                                        .difference(date)
-                                        .inDays ==
-                                    0)
-                                .toList();
-                            return ExpandablePanel(
-                              theme: const ExpandableThemeData(
-                                iconColor: Color(0xFF00A199),
-                                headerAlignment:
-                                    ExpandablePanelHeaderAlignment.center,
-                                iconPadding: EdgeInsets.only(
-                                  right: 28.0,
-                                  bottom: 5.0,
-                                  top: 5.0,
-                                ),
-                              ),
-                              header: Padding(
-                                padding: const EdgeInsets.only(left: 28.0),
-                                child: Text(
-                                    DateFormat.yMMMMd('ru').format(date),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(
-                                            color: const Color(0xFF00A199))),
-                              ),
-                              collapsed: const SizedBox(height: 0),
-                              expanded: ListView.builder(
+                          final workTasks = state.workTasks
+                              .where((element) =>
+                                  element.beginDate
+                                      .getOrCrash()
+                                      .difference(date)
+                                      .inDays ==
+                                  0)
+                              .toList();
+                          return ExpansionTile(
+                            // theme: const ExpandableThemeData(
+                            //   iconColor: Color(0xFF00A199),
+                            //   headerAlignment:
+                            //       ExpandablePanelHeaderAlignment.center,
+                            //   iconPadding: EdgeInsets.only(
+                            //     right: 28.0,
+                            //     bottom: 5.0,
+                            //     top: 5.0,
+                            //   ),
+                            // ),
+
+                            maintainState: true,
+                            title: Padding(
+                              padding: const EdgeInsets.only(left: 28.0),
+                              child: Text(DateFormat.yMMMMd('ru').format(date),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                          color: const Color(0xFF00A199))),
+                            ),
+                            children: [
+                              ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
@@ -120,9 +108,9 @@ class WorkTasksOverviewBody extends StatelessWidget {
                                 },
                                 itemCount: workTasks.length,
                               ),
-                            );
-                          },
-                        ),
+                            ],
+                          );
+                        },
                       ),
                     ),
                   ],

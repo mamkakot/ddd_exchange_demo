@@ -15,7 +15,7 @@ part 'work_task_watcher_state.dart';
 
 part 'work_task_watcher_bloc.freezed.dart';
 
-@injectable
+@Injectable()
 class WorkTaskWatcherBloc
     extends Bloc<WorkTaskWatcherEvent, WorkTaskWatcherState> {
   final IWorkTaskRepository _workTaskRepository;
@@ -47,8 +47,20 @@ class WorkTaskWatcherBloc
         workTasksReceived: (e) async {
           await e.failureOrWorkTasks.fold(
             (failure) async => emit(WorkTaskWatcherState.loadFailed(failure)),
-            (workTasks) async =>
-                emit(WorkTaskWatcherState.loadSuccess(workTasks)),
+            (workTasks) async {
+              var workTaskDates = workTasks
+                  .map((e) => e.beginDate.getOrCrash().copyWith(
+                        hour: 0,
+                        minute: 0,
+                        millisecond: 0,
+                        microsecond: 0,
+                        second: 0,
+                      ))
+                  .toSet()
+                  .toList();
+              return emit(
+                  WorkTaskWatcherState.loadSuccess(workTasks, workTaskDates));
+            },
           );
         },
       );
