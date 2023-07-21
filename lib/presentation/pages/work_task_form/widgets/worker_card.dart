@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hello_ddd/application/work_tasks/work_task_form/work_task_form_bloc.dart';
-import 'package:hello_ddd/domain/work_tasks/worker.dart';
+import 'package:hello_ddd/domain/workers/worker.dart';
 
 class WorkerCard extends StatelessWidget {
   const WorkerCard({super.key});
@@ -62,7 +62,7 @@ class WorkerCard extends StatelessWidget {
                                           color: const Color(0xFF777777)),
                                 ),
                                 Text(
-                                  "${worker!.rating.getOrCrash()}",
+                                  "${worker!.rating?.getOrCrash()}",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall
@@ -70,7 +70,7 @@ class WorkerCard extends StatelessWidget {
                                           fontSize: 10.0,
                                           fontWeight: FontWeight.bold,
                                           color: getColorFromRating(
-                                              worker!.rating.getOrCrash())),
+                                              worker!.rating!.getOrCrash())),
                                 ),
                               ],
                             ),

@@ -1,10 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hello_ddd/domain/auth/value_objects.dart';
+import 'package:hello_ddd/domain/workers/value_objects.dart';
 import 'package:hello_ddd/domain/core/value_objects.dart';
 import 'package:hello_ddd/domain/work_tasks/store.dart';
 import 'package:hello_ddd/domain/work_tasks/value_objects.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:hello_ddd/domain/work_tasks/worker.dart';
+import 'package:hello_ddd/domain/workers/worker.dart';
 
 import 'package:hello_ddd/domain/work_tasks/work_task.dart';
 
@@ -55,9 +55,9 @@ abstract class WorkTaskDTO implements _$WorkTaskDTO {
       name: WorkTaskName(name),
       type: WorkTaskType(type),
       store: store.toDomain(),
-      worker: worker != null ? worker!.toDomain() : null,
+      worker: (worker ?? worker!.toDomain()) as Worker?,
       hours: WorkTaskHours(hours),
-      rating: rating != null ? WorkTaskRating(rating!) : null,
+      rating: (rating ?? WorkTaskRating(rating!)) as WorkTaskRating?,
       beginDate: WorkTaskBegin(beginDate),
       endDate: WorkTaskEnd(endDate),
       description: WorkTaskDescription(description),
@@ -122,28 +122,33 @@ abstract class WorkerDTO implements _$WorkerDTO {
   const factory WorkerDTO({
     required String id,
     required String fullName,
-    required String code,
+    @JsonKey(includeIfNull: false) String? code,
     required String position,
-    required double rating,
+    required String role,
+    // required User user,
+    @JsonKey(includeIfNull: false) double? rating,
   }) = _WorkerDTO;
 
   factory WorkerDTO.fromDomain(Worker worker) {
     return WorkerDTO(
       id: worker.id.getOrCrash(),
-      code: worker.code.getOrCrash(),
+      code: worker.code?.getOrCrash(),
       fullName: worker.fullName.getOrCrash(),
       position: worker.position.getOrCrash(),
-      rating: worker.rating.getOrCrash(),
+      rating: worker.rating?.getOrCrash(),
+      role: worker.role.getOrCrash(),
+      // user: worker.user.getOrCrash(),
     );
   }
 
   Worker toDomain() {
     return Worker(
       id: UniqueId.fromUniqueString(id),
-      code: WorkerCode(code),
+      code: WorkerCode(code!),
       fullName: WorkerFullName(fullName),
       position: WorkerPosition(position),
-      rating: WorkerRating(rating),
+      rating: WorkerRating(rating!),
+      role: WorkerRole(role),
     );
   }
 

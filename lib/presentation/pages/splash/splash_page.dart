@@ -20,7 +20,7 @@ class SplashPage extends StatelessWidget {
           state.when(
               initial: () {},
               authenticated: () =>
-                  context.router.replace(const WorkTasksOverviewRoute()),
+                  context.router.replace(const RoleSelectionRoute()),
               unauthenticated: () =>
                   context.router.replace(const SignInRoute()));
         },

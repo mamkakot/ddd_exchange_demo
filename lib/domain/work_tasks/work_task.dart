@@ -3,9 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hello_ddd/domain/core/value_objects.dart';
 import 'package:hello_ddd/domain/work_tasks/store.dart';
 import 'package:hello_ddd/domain/work_tasks/value_objects.dart';
-import 'package:hello_ddd/domain/work_tasks/worker.dart';
-
-import '../core/failures.dart';
+import 'package:hello_ddd/domain/workers/worker.dart';
+import 'package:hello_ddd/domain/core/failures.dart';
 
 part 'work_task.freezed.dart';
 
@@ -21,10 +20,10 @@ class WorkTask with _$WorkTask {
     required WorkTaskHours hours,
     required WorkTaskBegin beginDate,
     required WorkTaskEnd endDate,
-    required WorkTaskRating? rating,
+    WorkTaskRating? rating,
     required bool completed,
     // required Worker author,
-    required Worker? worker,
+    Worker? worker,
     required WorkTaskDescription description,
   }) = _WorkTask;
 
