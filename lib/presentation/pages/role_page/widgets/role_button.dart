@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:hello_ddd/domain/workers/value_objects.dart';
 
 class RoleButton extends StatelessWidget {
   final String role;
+  final Icon icon;
+  final Function onPressed;
 
-  const RoleButton({super.key, required this.role});
+  const RoleButton({
+    super.key,
+    required this.role,
+    required this.icon,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,28 +18,13 @@ class RoleButton extends StatelessWidget {
       height: 120.0,
       width: 120.0,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onPressed(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              coolCase(
-                role,
-                {
-                  WorkerRole.predefinedRoles.worker: Icons.handyman,
-                  WorkerRole.predefinedRoles.client: Icons.account_box_rounded,
-                },
-              ),
-              size: 80.0,
-            ),
+            icon,
             Text(
-              coolCase(
-                role,
-                {
-                  WorkerRole.predefinedRoles.worker: "Исполнитель",
-                  WorkerRole.predefinedRoles.client: "Заказчик",
-                },
-              )!,
+              role,
               style: Theme.of(context)
                   .textTheme
                   .labelMedium
@@ -44,16 +35,4 @@ class RoleButton extends StatelessWidget {
       ),
     );
   }
-}
-
-TValue? coolCase<TOptionType, TValue>(
-  TOptionType selectedOption,
-  Map<TOptionType, TValue> branches, [
-  TValue? defaultValue,
-]) {
-  if (!branches.containsKey(selectedOption)) {
-    return defaultValue;
-  }
-
-  return branches[selectedOption];
 }
