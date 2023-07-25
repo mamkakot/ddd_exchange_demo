@@ -15,4 +15,5 @@ extension FirestoreX on FirebaseFirestore {
 
 extension DocumentReferenceX on DocumentReference {
   CollectionReference get workTaskCollection => collection('work_tasks');
+  CollectionReference get workerCollection => collection('workers');
 }

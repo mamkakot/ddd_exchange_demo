@@ -22,6 +22,7 @@ class AppWidget extends StatelessWidget {
         )
       ],
       child: MaterialApp.router(
+
         title: 'Тестовое приложение по заявкам',
         theme: ThemeData(
           brightness: Brightness.light,

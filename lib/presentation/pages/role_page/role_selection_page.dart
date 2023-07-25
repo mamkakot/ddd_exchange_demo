@@ -24,7 +24,8 @@ class RoleSelectionPage extends StatelessWidget {
                   size: 80.0,
                 ),
                 onPressed: () {
-                  context.router.replace(const WorkTasksOverviewRoute());
+                  // TODO: change from SplashRoute to smthng
+                  context.router.replace(const SplashRoute());
                 },
               ),
               RoleButton(
@@ -34,8 +35,7 @@ class RoleSelectionPage extends StatelessWidget {
                   size: 80.0,
                 ),
                 onPressed: () {
-                  // TODO: change from SplashRoute to smthng
-                  context.router.replace(const SplashRoute());
+                  context.router.replace(const WorkTasksOverviewRoute());
                 },
               ),
             ],

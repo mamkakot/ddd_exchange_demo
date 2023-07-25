@@ -20,26 +20,27 @@ class WorkTask with _$WorkTask {
     required WorkTaskHours hours,
     required WorkTaskBegin beginDate,
     required WorkTaskEnd endDate,
-    WorkTaskRating? rating,
+    required WorkTaskRating rating,
     required bool completed,
-    // required Worker author,
     Worker? worker,
     required WorkTaskDescription description,
   }) = _WorkTask;
 
-  factory WorkTask.empty() => WorkTask(
-        id: UniqueId(),
-        name: WorkTaskName(''),
-        type: WorkTaskType(WorkTaskType.predefinedTypes.first),
-        store: Store.predefinedStores.first,
-        worker: null,
-        hours: WorkTaskHours(8.0),
-        beginDate: WorkTaskBegin(DateTime.now()),
-        endDate: WorkTaskEnd(DateTime.now().add(const Duration(hours: 1))),
-        description: WorkTaskDescription(''),
-        completed: false,
-        rating: null,
-      );
+  factory WorkTask.empty() {
+    return WorkTask(
+      id: UniqueId(),
+      name: WorkTaskName(''),
+      type: WorkTaskType(WorkTaskType.predefinedTypes.first),
+      store: Store.predefinedStores.first,
+      worker: null,
+      hours: WorkTaskHours(8.0),
+      beginDate: WorkTaskBegin(DateTime.now()),
+      endDate: WorkTaskEnd(DateTime.now().add(const Duration(hours: 1))),
+      description: WorkTaskDescription(''),
+      completed: false,
+      rating: WorkTaskRating(0),
+    );
+  }
 }
 
 extension FailureOption on WorkTask {

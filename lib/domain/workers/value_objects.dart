@@ -53,6 +53,7 @@ class WorkerRating extends ValueObject<double> {
 class WorkerPosition extends ValueObject<String> {
   @override
   final Either<ValueFailure<String>, String> value;
+  static const maxLength = 128;
 
   factory WorkerPosition(String input) {
     return WorkerPosition._(

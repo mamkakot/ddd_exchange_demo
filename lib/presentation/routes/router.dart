@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:hello_ddd/domain/workers/worker.dart';
 import 'package:hello_ddd/presentation/pages/role_page/role_selection_page.dart';
 import 'package:hello_ddd/presentation/pages/sign_in/sign_in_page.dart';
 import 'package:hello_ddd/presentation/pages/splash/splash_page.dart';
@@ -7,6 +8,7 @@ import 'package:hello_ddd/presentation/pages/work_task_form/work_task_form_page.
 import 'package:hello_ddd/presentation/pages/work_tasks_overview/work_tasks_overview_page.dart';
 
 import 'package:hello_ddd/domain/work_tasks/work_task.dart';
+import 'package:hello_ddd/presentation/pages/worker_registration_form/worker_form_page.dart';
 
 part 'router.gr.dart';
 

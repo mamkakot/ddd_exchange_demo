@@ -9,7 +9,7 @@ import 'package:injectable/injectable.dart';
 import 'firebase_user_mapper.dart';
 import '../../domain/auth/user.dart' as cool_user;
 
-@LazySingleton(as: IAuthRepository, env: [Environment.prod])
+@LazySingleton(as: IAuthRepository, env: [Environment.test])
 class FirebaseAuthFacade implements IAuthRepository {
   final auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;

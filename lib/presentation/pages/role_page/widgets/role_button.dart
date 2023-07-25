@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class RoleButton extends StatelessWidget {
   final String role;
   final Icon icon;
-  final Function onPressed;
+  final Function() onPressed;
 
   const RoleButton({
     super.key,
@@ -18,7 +18,7 @@ class RoleButton extends StatelessWidget {
       height: 120.0,
       width: 120.0,
       child: ElevatedButton(
-        onPressed: onPressed(),
+        onPressed: onPressed,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

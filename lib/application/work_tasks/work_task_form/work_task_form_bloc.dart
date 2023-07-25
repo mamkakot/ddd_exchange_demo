@@ -6,8 +6,7 @@ import 'package:hello_ddd/domain/work_tasks/value_objects.dart';
 import 'package:hello_ddd/domain/work_tasks/work_task.dart';
 import 'package:hello_ddd/domain/work_tasks/work_task_failure.dart';
 import 'package:injectable/injectable.dart';
-
-import '../../../domain/work_tasks/store.dart';
+import 'package:hello_ddd/domain/work_tasks/store.dart';
 
 part 'work_task_form_event.dart';
 

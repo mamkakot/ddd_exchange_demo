@@ -5,6 +5,7 @@ import 'package:hello_ddd/domain/auth/value_objects.dart';
 
 abstract class IAuthRepository {
   Future<Option<User>> getSignedInUser();
+
   Future<Either<AuthFailure, Unit>> registerWithCredentials({
     required EmailAddress emailAddress,
     required Password password,
